@@ -1,0 +1,38 @@
+[alias]
+	diff-cached = diff --cached
+	diff-staged = diff --staged
+	log-pretty = log --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=iso --all --graph
+	push-force = push --force-with-lease --force-if-includes
+
+# 既存の credential helper をリセット（グローバルなどの設定を無効化）
+[credential]
+	helper =
+
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
+
+[grep]
+	lineNumber = true
+
+[init]
+	defaultBranch = main
+	templateDir = ~/.config/git/templates
+
+[merge]
+	ff = false
+
+[pager]
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+
+[pull]
+	ff = only
+
+[include]
+	path = ~/.config/git/private/config

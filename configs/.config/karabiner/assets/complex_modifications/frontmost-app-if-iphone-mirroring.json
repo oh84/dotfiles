@@ -1,0 +1,58 @@
+{
+  "title": "frontmost-app-if-iphone-mirroring",
+  "rules": [
+    {
+      "description": "最前面アプリがiPhoneミラーリングのとき、 英数・かな を 地球儀キー に割り当てる",
+      "manipulators": [
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.apple\\.ScreenContinuity$"
+              ]
+            }
+          ],
+          "from": {
+            "key_code": "japanese_eisuu",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "apple_vendor_top_case_key_code": "keyboard_fn"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.apple\\.ScreenContinuity$"
+              ]
+            }
+          ],
+          "from": {
+            "key_code": "japanese_kana",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "apple_vendor_top_case_key_code": "keyboard_fn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

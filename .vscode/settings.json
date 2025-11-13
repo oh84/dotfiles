@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "**/configs/.Brewfile*": "ruby",
+    "**/configs/.config/karabiner/**/*.json": "jsonc",
+    "**/configs/.config/git/ignore": "ignore",
+    "**/configs/.config/git/private/**/config": "properties"
+  }
+}

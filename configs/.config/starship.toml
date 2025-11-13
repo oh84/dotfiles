@@ -1,0 +1,28 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# https://starship.rs/config/#default-prompt-format
+format = """
+$all\
+$time\
+$line_break\
+$character\
+"""
+
+# https://starship.rs/config/#options
+command_timeout = 3000
+
+[directory]
+truncation_length = 0
+truncate_to_repo = false
+# truncation_symbol = '.../'
+
+[time]
+disabled = false
+
+# [custom.gh_user]
+# command = "gh auth status --active 2>/dev/null | grep 'Logged in to github.com account' | awk '{print $7}'"
+# when    = "gh auth status --active 2>/dev/null | grep 'Logged in to github.com account'"
+# symbol  = " "
+# style   = "bold blue"
+# format  = "[$symbol $output]($style) "
