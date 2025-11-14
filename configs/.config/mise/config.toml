@@ -1,6 +1,7 @@
 [tools]
 bun = "latest"
 deno = "latest"
+"github:secretlint/secretlint" = "latest"
 go = "latest"
 java = "lts"
 node = "lts"

@@ -70,6 +70,10 @@ ln -svf  "$CONFIGS_DIR/.config/git/config" "$HOME/.config/git/config"
 backup "$HOME/.config/git/ignore"
 ln -svf  "$CONFIGS_DIR/.config/git/ignore" "$HOME/.config/git/ignore"
 
+# hooks (ディレクトリをリンク)
+backup "$HOME/.config/git/hooks"
+ln -svf  "$CONFIGS_DIR/.config/git/hooks" "$HOME/.config/git"
+
 # templates (ディレクトリをリンク)
 backup "$HOME/.config/git/templates"
 ln -svf  "$CONFIGS_DIR/.config/git/templates" "$HOME/.config/git"
@@ -153,6 +157,14 @@ ln -svf  "$CONFIGS_DIR/.default-python-packages" "$HOME/.default-python-packages
 
 # vimのcoc.nvimプラグインで必要なのでインストールしておく
 mise install node
+
+# ----------------------------------------------------------
+# secretlint
+# ----------------------------------------------------------
+
+mkdir -p "$HOME/.config/secretlint"
+backup "$HOME/.config/secretlint/.secretlintrc.json"
+ln -svf  "$CONFIGS_DIR/.config/secretlint/.secretlintrc.json" "$HOME/.config/secretlint/.secretlintrc.json"
 
 # ----------------------------------------------------------
 # ghostty

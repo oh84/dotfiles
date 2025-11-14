@@ -4,6 +4,9 @@
 	log-pretty = log --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=iso --all --graph
 	push-force = push --force-with-lease --force-if-includes
 
+[core]
+	hooksPath = ~/.config/git/hooks
+
 # 既存の credential helper をリセット（グローバルなどの設定を無効化）
 [credential]
 	helper =
