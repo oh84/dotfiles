@@ -20,9 +20,9 @@ truncate_to_repo = false
 [time]
 disabled = false
 
-# [custom.gh_user]
-# command = "gh auth status --active 2>/dev/null | grep 'Logged in to github.com account' | awk '{print $7}'"
-# when    = "gh auth status --active 2>/dev/null | grep 'Logged in to github.com account'"
-# symbol  = " "
-# style   = "bold blue"
-# format  = "[$symbol $output]($style) "
+[custom.gh_user]
+command = "yq '.\"github.com\".user' ~/.config/gh/hosts.yml"
+when = "yq '.\"github.com\".user' ~/.config/gh/hosts.yml | grep -qv '^null$' || exit 1"
+symbol  = " "
+style   = "bold blue"
+format  = "[$symbol $output]($style) "

@@ -40,6 +40,7 @@ brew 'fd'
 brew 'fzf'
 brew 'jq'; brew 'jnv'
 brew 'ripgrep'
+brew 'yq'
 brew 'zoxide'
 
 # Others
