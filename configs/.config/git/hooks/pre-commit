@@ -24,9 +24,13 @@ if [ $RET -ne 0 ] ;then
 	exit $RET
 fi
 
-echo "[secretlint]"
-echo "$(echo "$FILES" | wc -l) files checked:"
-echo "$FILES"
-echo ""
+NUM_FILES=$(echo "$FILES" | wc -l)
+SUFFIX=""
+[ "$NUM_FILES" -gt 1 ] && SUFFIX="s"
 
-exit 0
+echo "[secretlint]"
+echo " $NUM_FILES file$SUFFIX checked:"
+for file in $FILES; do
+	echo " $file"
+done
+echo ""
