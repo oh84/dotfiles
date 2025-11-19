@@ -165,6 +165,10 @@ bindkey '^g' fzf-ghq-widget
 # ツール設定 (その他)
 # ==============================================================================
 
+# 1Password
+# https://developer.1password.com/docs/cli/shell-plugins
+command -v op &>/dev/null && source "$HOME/.config/op/plugins.sh"
+
 # docker
 fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
