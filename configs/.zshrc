@@ -167,7 +167,7 @@ bindkey '^g' fzf-ghq-widget
 
 # 1Password
 # https://developer.1password.com/docs/cli/shell-plugins
-command -v op &>/dev/null && source "$HOME/.config/op/plugins.sh"
+# command -v op &>/dev/null && source "$HOME/.config/op/plugins.sh"
 
 # docker
 fpath=($HOME/.docker/completions $fpath)
@@ -179,6 +179,11 @@ command -v brew &>/dev/null && export HOMEBREW_NO_AUTO_UPDATE=1
 
 # mise
 eval "$(mise activate zsh)"
+# aws-cli
+# https://docs.aws.amazon.com/ja_jp/cli/v1/userguide/cli-configure-completion.html
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C aws_completer aws
 
 # gibo
 command -v gibo &>/dev/null && source <(gibo completion zsh)

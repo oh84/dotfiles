@@ -44,7 +44,6 @@ brew 'yq'
 brew 'zoxide'
 
 # Others
-brew 'awscli@2'
 brew 'azure-cli'
 brew 'bitwarden-cli'
 brew 'chrony'
