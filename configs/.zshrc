@@ -1,6 +1,15 @@
 #!/usr/bin/env zsh
 
 # ==============================================================================
+# Functions
+# ==============================================================================
+
+is_linux() {
+  [[ "$OSTYPE" == "linux-gnu"* ]]
+  return $?
+}
+
+# ==============================================================================
 # プラグイン
 # ==============================================================================
 
@@ -176,6 +185,9 @@ compinit
 
 # homebrew
 command -v brew &>/dev/null && export HOMEBREW_NO_AUTO_UPDATE=1
+if is_linux; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 # mise
 eval "$(mise activate zsh)"

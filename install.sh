@@ -26,19 +26,23 @@ is_macos() {
   return $?
 }
 
+is_linux() {
+  [[ "$OSTYPE" == "linux-gnu"* ]]
+  return $?
+}
+
 # ==============================================================================
 # Install Homebrew packages
 # ==============================================================================
-
-if ! is_macos; then
-  echo "[ERROR] This dotfiles is only for macOS."
-  exit 1
-fi
 
 if ! command -v brew &>/dev/null; then
   # https://docs.brew.sh/Installation
   echo "Homebrew is not installed, installing..."
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  if is_linux; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
 fi
 
 backup "$HOME/.Brewfile"

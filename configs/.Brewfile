@@ -18,6 +18,9 @@ brew 'lefthook'
 tap 'jesseduffield/lazygit'; brew 'jesseduffield/lazygit/lazygit'
 tap 'simonwhitaker/tap'; brew 'simonwhitaker/tap/gibo'
 
+# vim
+brew 'vim'
+
 # GNU commands
 # https://gist.github.com/skyzyx/3438280b18e4f7c490db8a2a2ca0b9da
 if OS.mac?
@@ -50,13 +53,13 @@ brew 'chrony'
 brew 'cloudflared'
 brew 'duckdb'
 brew 'imagemagick'
-brew 'iproute2mac'
+brew 'iproute2mac' if OS.mac?
 brew 'libyaml'
 brew 'mise'
 brew 'mysql'
-brew 'openssl@1.1'
+brew 'openssl@1.1' if OS.mac? # 既にDeprecatedだが、古いRubyをビルドする場合に必要になる
 brew 'openssl@3'
-brew 'postgresql'
+brew 'postgresql' if OS.mac? # Linuxだとpostinstallが失敗する
 brew 'tree'
 brew 'watch'
 brew 'watchman'
