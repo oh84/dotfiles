@@ -10,11 +10,53 @@ is_linux() {
 }
 
 # ==============================================================================
+# Homebrew
+# ==============================================================================
+
+if is_linux; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+# ==============================================================================
+# パス設定
+# ==============================================================================
+
+# PATH
+typeset -U path PATH
+path=(
+  $HOME/bin(N-/)
+  $HOME/.local/bin(N-/)
+  $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N-/)                  # GNU commands for macOS
+  $HOMEBREW_PREFIX/share/git-core/contrib/diff-highlight(N-/) # Git diff-highlight for macOS
+  /usr/share/doc/git/contrib/diff-highlight(N-/)              # Git diff-highlight for Debian
+  $path
+)
+
+# MANPATH
+typeset -U manpath MANPATH
+manpath=(
+  $HOMEBREW_PREFIX/opt/*/libexec/gnuman(N-/) # GNU commands for macOS
+  $manpath
+)
+export MANPATH
+
+# ==============================================================================
 # プラグイン
 # ==============================================================================
 
 eval "$(sheldon source)"
+
 export SHELDON_CONFIG_DIR=$HOME/.config/sheldon
+
+# ==============================================================================
+# プロンプト
+# ==============================================================================
+
+eval "$(starship init zsh)"
+
+export STARSHIP_CONFIG=$HOME/.config/starship.toml
 
 # ==============================================================================
 # 基本設定
@@ -44,42 +86,6 @@ setopt inc_append_history   # 履歴をインクリメンタルに即時保存
 
 # 文字コード設定
 export LANG=ja_JP.UTF-8
-
-# ==============================================================================
-# プロンプト
-# ==============================================================================
-
-eval "$(starship init zsh)"
-export STARSHIP_CONFIG=$HOME/.config/starship.toml
-
-# ==============================================================================
-# パス設定
-# ==============================================================================
-
-# PATHの設定
-typeset -U path PATH
-path=(
-  $HOME/bin(N-/)
-  $HOME/.local/bin(N-/)
-  $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N-/)                  # GNU commands for macOS
-  $HOMEBREW_PREFIX/share/git-core/contrib/diff-highlight(N-/) # Git diff-highlight for macOS
-  /usr/share/doc/git/contrib/diff-highlight(N-/)              # Git diff-highlight for Debian
-  $path
-)
-
-# MANPATHの設定
-typeset -U manpath MANPATH
-manpath=(
-  $HOMEBREW_PREFIX/opt/*/libexec/gnuman(N-/) # GNU commands for macOS
-  $manpath
-)
-export MANPATH
-
-# エディタの設定
-# export EDITOR=nvim
-
-# XDG Base Directory Specification
-export XDG_CONFIG_HOME=$HOME/.config
 
 # ==============================================================================
 # エイリアス
@@ -157,8 +163,10 @@ else
   source <(curl -fsSL https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$FZF_VERSION/shell/key-bindings.zsh)
 fi
 
+# https://github.com/junegunn/fzf#environment-variables
 export FZF_DEFAULT_OPTS="--reverse --height 40%"
 
+# fzf + ghq
 fzf-ghq-widget() {
   local repo=$(ghq list | fzf)
   if [ -n "$repo" ]; then
@@ -169,6 +177,18 @@ fzf-ghq-widget() {
 }
 zle -N fzf-ghq-widget
 bindkey '^g' fzf-ghq-widget
+
+# ==============================================================================
+# ツール設定 (mise)
+# ==============================================================================
+
+eval "$(mise activate zsh)"
+
+# aws-cli
+# https://docs.aws.amazon.com/ja_jp/cli/v1/userguide/cli-configure-completion.html
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C aws_completer aws
 
 # ==============================================================================
 # ツール設定 (その他)
@@ -183,20 +203,6 @@ fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 
-# homebrew
-command -v brew &>/dev/null && export HOMEBREW_NO_AUTO_UPDATE=1
-if is_linux; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-# mise
-eval "$(mise activate zsh)"
-# aws-cli
-# https://docs.aws.amazon.com/ja_jp/cli/v1/userguide/cli-configure-completion.html
-autoload bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
-complete -C aws_completer aws
-
 # gibo
 command -v gibo &>/dev/null && source <(gibo completion zsh)
 
@@ -208,13 +214,6 @@ command -v gibo &>/dev/null && source <(gibo completion zsh)
 
 # LM Studio CLI (lms)
 export PATH="$PATH:$HOME/.lmstudio/bin"
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
 
 # terraform
 autoload -U +X bashcompinit && bashcompinit
