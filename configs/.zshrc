@@ -215,6 +215,13 @@ command -v gibo &>/dev/null && source <(gibo completion zsh)
 # LM Studio CLI (lms)
 export PATH="$PATH:$HOME/.lmstudio/bin"
 
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
 # terraform
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C terraform terraform
