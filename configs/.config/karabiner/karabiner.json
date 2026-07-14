@@ -5,6 +5,7 @@
                 "rules": [
                     {
                         "description": "最前面アプリがリモートデスクトップアプリでないとき、 caps lock を right control に割り当てつつ、空打ちの場合は 英数・かな をトグルで切り替える",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -270,6 +271,7 @@
                     },
                     {
                         "description": "最前面アプリがリモートデスクトップアプリのとき、 caps lock を right control に割り当てつつ、空打ちの場合は IMEオン・オフ をトグルで切り替える (alt + ~ を送信する)",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -310,6 +312,7 @@
                     },
                     {
                         "description": "最前面アプリがリモートデスクトップアプリのとき、control と command を入れ替える",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -373,6 +376,31 @@
                                 ],
                                 "from": { "key_code": "right_command" },
                                 "to": { "key_code": "right_control" },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "最前面アプリがリモートデスクトップアプリのとき、 right control + [ を esc に割り当てる",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.microsoft\\.rdc\\.macos$",
+                                            "^com\\.google\\.Chrome\\.app\\.efmjfjelnicpmdcmfikempdhlmainjcb$",
+                                            "^com\\.omnissa\\.horizon\\.client.mac$",
+                                            "^com\\.splashtop\\.stb\\.macosx$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "close_bracket",
+                                    "modifiers": { "mandatory": ["right_control"] }
+                                },
+                                "to": [{ "key_code": "escape" }],
                                 "type": "basic"
                             }
                         ]
@@ -549,30 +577,6 @@
                         ]
                     },
                     {
-                        "description": "最前面アプリがリモートデスクトップアプリのとき、 right control + [ を esc に割り当てる",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.microsoft\\.rdc\\.macos$",
-                                            "^com\\.google\\.Chrome\\.app\\.efmjfjelnicpmdcmfikempdhlmainjcb$",
-                                            "^com\\.omnissa\\.horizon\\.client.mac$",
-                                            "^com\\.splashtop\\.stb\\.macosx$"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "close_bracket",
-                                    "modifiers": { "mandatory": ["right_control"] }
-                                },
-                                "to": [{ "key_code": "escape" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "デバイスがApple Internal Keyboardのとき、英数・かなキーが他のキーと同時に押された場合はfnキーとして動作させる",
                         "manipulators": [
                             {
@@ -650,7 +654,7 @@
                         ]
                     },
                     {
-                        "description": "デバイスがApple Internal Keyboardのとき、アンダースコアのキーでバックスラッシュが入力され、シフト＋アンダースコアのキーでアンダースコアが入力されるように設定する",
+                        "description": "デバイスがApple Internal Keyboardのとき、シフト＋アンダースコアのキーでバックスラッシュが入力されるように設定する",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -701,7 +705,7 @@
                                 ],
                                 "from": {
                                     "key_code": "international1",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": { "mandatory": ["any"] }
                                 },
                                 "to": [{ "key_code": "international3" }],
                                 "type": "basic"
@@ -721,10 +725,6 @@
                         {
                             "from": { "key_code": "caps_lock" },
                             "to": [{ "key_code": "left_control" }]
-                        },
-                        {
-                            "from": { "key_code": "left_control" },
-                            "to": [{ "key_code": "caps_lock" }]
                         }
                     ]
                 },

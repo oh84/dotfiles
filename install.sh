@@ -46,11 +46,11 @@ if ! command -v brew &>/dev/null; then
 fi
 
 backup "$HOME/.Brewfile"
-ln -svf  "$CONFIGS_DIR/.Brewfile" "$HOME/.Brewfile"
+ln -svf "$CONFIGS_DIR/.Brewfile" "$HOME/.Brewfile"
 backup "$HOME/.Brewfile.cask"
-ln -svf  "$CONFIGS_DIR/.Brewfile.cask" "$HOME/.Brewfile.cask"
+ln -svf "$CONFIGS_DIR/.Brewfile.cask" "$HOME/.Brewfile.cask"
 backup "$HOME/.Brewfile.mas"
-ln -svf  "$CONFIGS_DIR/.Brewfile.mas" "$HOME/.Brewfile.mas"
+ln -svf "$CONFIGS_DIR/.Brewfile.mas" "$HOME/.Brewfile.mas"
 
 brew bundle --global # from $HOME/.Brewfile
 # brew bundle --file "$HOME/.Brewfile.cask"
@@ -68,19 +68,19 @@ mkdir -p "$HOME/.config/git"
 
 # config
 backup "$HOME/.config/git/config"
-ln -svf  "$CONFIGS_DIR/.config/git/config" "$HOME/.config/git/config"
+ln -svf "$CONFIGS_DIR/.config/git/config" "$HOME/.config/git/config"
 
 # ignore
 backup "$HOME/.config/git/ignore"
-ln -svf  "$CONFIGS_DIR/.config/git/ignore" "$HOME/.config/git/ignore"
+ln -svf "$CONFIGS_DIR/.config/git/ignore" "$HOME/.config/git/ignore"
 
 # hooks (ディレクトリをリンク)
 backup "$HOME/.config/git/hooks"
-ln -svf  "$CONFIGS_DIR/.config/git/hooks" "$HOME/.config/git"
+ln -svf "$CONFIGS_DIR/.config/git/hooks" "$HOME/.config/git"
 
 # templates (ディレクトリをリンク)
 backup "$HOME/.config/git/templates"
-ln -svf  "$CONFIGS_DIR/.config/git/templates" "$HOME/.config/git"
+ln -svf "$CONFIGS_DIR/.config/git/templates" "$HOME/.config/git"
 
 # private config (ディレクトリをリンク)
 backup "$HOME/.config/git/private"
@@ -92,12 +92,12 @@ ln -svf "$CONFIGS_DIR/.config/git/private" "$HOME/.config/git"
 
 # zshrc
 backup "$HOME/.zshrc"
-ln -svf  "$CONFIGS_DIR/.zshrc" "$HOME/.zshrc"
+ln -svf "$CONFIGS_DIR/.zshrc" "$HOME/.zshrc"
 
 # sheldon
 mkdir -p "$HOME/.config/sheldon"
 backup "$HOME/.config/sheldon/plugins.toml"
-ln -svf  "$CONFIGS_DIR/.config/sheldon/plugins.toml" "$HOME/.config/sheldon/plugins.toml"
+ln -svf "$CONFIGS_DIR/.config/sheldon/plugins.toml" "$HOME/.config/sheldon/plugins.toml"
 
 # ----------------------------------------------------------
 # starship
@@ -105,7 +105,7 @@ ln -svf  "$CONFIGS_DIR/.config/sheldon/plugins.toml" "$HOME/.config/sheldon/plug
 
 mkdir -p "$HOME/.config"
 backup "$HOME/.config/starship.toml"
-ln -svf  "$CONFIGS_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
+ln -svf "$CONFIGS_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
 
 # ----------------------------------------------------------
 # tmux
@@ -113,7 +113,7 @@ ln -svf  "$CONFIGS_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
 
 # tmux.conf
 backup "$HOME/.tmux.conf"
-ln -svf  "$CONFIGS_DIR/.tmux.conf" "$HOME/.tmux.conf"
+ln -svf "$CONFIGS_DIR/.tmux.conf" "$HOME/.tmux.conf"
 
 # tpm
 if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
@@ -132,7 +132,7 @@ fi
 
 # vimrc
 backup "$HOME/.vimrc"
-ln -svf  "$CONFIGS_DIR/.vimrc" "$HOME/.vimrc"
+ln -svf "$CONFIGS_DIR/.vimrc" "$HOME/.vimrc"
 
 # vim-plug
 if [[ ! -d "$HOME/.vim/plugged" ]]; then
@@ -147,17 +147,17 @@ fi
 # config.toml
 mkdir -p "$HOME/.config/mise"
 backup "$HOME/.config/mise/config.toml"
-ln -svf  "$CONFIGS_DIR/.config/mise/config.toml" "$HOME/.config/mise/config.toml"
+ln -svf "$CONFIGS_DIR/.config/mise/config.toml" "$HOME/.config/mise/config.toml"
 
 # Default packages
 backup "$HOME/.default-gems"
-ln -svf  "$CONFIGS_DIR/.default-gems" "$HOME/.default-gems"
+ln -svf "$CONFIGS_DIR/.default-gems" "$HOME/.default-gems"
 backup "$HOME/.default-go-packages"
-ln -svf  "$CONFIGS_DIR/.default-go-packages" "$HOME/.default-go-packages"
+ln -svf "$CONFIGS_DIR/.default-go-packages" "$HOME/.default-go-packages"
 backup "$HOME/.default-npm-packages"
-ln -svf  "$CONFIGS_DIR/.default-npm-packages" "$HOME/.default-npm-packages"
+ln -svf "$CONFIGS_DIR/.default-npm-packages" "$HOME/.default-npm-packages"
 backup "$HOME/.default-python-packages"
-ln -svf  "$CONFIGS_DIR/.default-python-packages" "$HOME/.default-python-packages"
+ln -svf "$CONFIGS_DIR/.default-python-packages" "$HOME/.default-python-packages"
 
 # vimのcoc.nvimプラグインで必要なのでインストールしておく
 mise install node
@@ -168,7 +168,7 @@ mise install node
 
 mkdir -p "$HOME/.config/secretlint"
 backup "$HOME/.config/secretlint/.secretlintrc.json"
-ln -svf  "$CONFIGS_DIR/.config/secretlint/.secretlintrc.json" "$HOME/.config/secretlint/.secretlintrc.json"
+ln -svf "$CONFIGS_DIR/.config/secretlint/.secretlintrc.json" "$HOME/.config/secretlint/.secretlintrc.json"
 
 # ----------------------------------------------------------
 # ghostty
@@ -176,7 +176,23 @@ ln -svf  "$CONFIGS_DIR/.config/secretlint/.secretlintrc.json" "$HOME/.config/sec
 
 mkdir -p "$HOME/.config/ghostty"
 backup "$HOME/.config/ghostty/config"
-ln -svf  "$CONFIGS_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
+ln -svf "$CONFIGS_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
+
+# ----------------------------------------------------------
+# Claude
+# ----------------------------------------------------------
+
+mkdir -p "$HOME/.claude"
+backup "$HOME/.claude/CLAUDE.md"
+ln -svf "$CONFIGS_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+backup "$HOME/.claude/settings.json"
+ln -svf "$CONFIGS_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+backup "$HOME/.claude/statusline.sh"
+ln -svf "$CONFIGS_DIR/.claude/statusline.sh" "$HOME/.claude/statusline.sh"
+backup "$HOME/.claude/commands"
+ln -svf "$CONFIGS_DIR/.claude/commands" "$HOME/.claude" # ディレクトリをリンク
+backup "$HOME/.claude/skills"
+ln -svf "$CONFIGS_DIR/.claude/skills" "$HOME/.claude" # ディレクトリをリンク
 
 # ----------------------------------------------------------
 # karabiner
@@ -187,7 +203,7 @@ ln -svf  "$CONFIGS_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
 if is_macos; then
   mkdir -p "$HOME/.config"
   backup "$HOME/.config/karabiner"
-  ln -svf  "$CONFIGS_DIR/.config/karabiner" "$HOME/.config"
+  ln -svf "$CONFIGS_DIR/.config/karabiner" "$HOME/.config"
 fi
 
 # ----------------------------------------------------------
@@ -197,5 +213,5 @@ fi
 if is_macos; then
   mkdir -p "$HOME/.hammerspoon"
   backup "$HOME/.hammerspoon/init.lua"
-  ln -svf  "$CONFIGS_DIR/.hammerspoon/init.lua" "$HOME/.hammerspoon/init.lua"
+  ln -svf "$CONFIGS_DIR/.hammerspoon/init.lua" "$HOME/.hammerspoon/init.lua"
 fi

@@ -198,6 +198,12 @@ complete -C aws_completer aws
 # https://developer.1password.com/docs/cli/shell-plugins
 # command -v op &>/dev/null && source "$HOME/.config/op/plugins.sh"
 
+# Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+# devcontainer
+export PATH="$HOME/.devcontainers/bin:$PATH"
+
 # docker
 fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
@@ -215,12 +221,19 @@ command -v gibo &>/dev/null && source <(gibo completion zsh)
 # LM Studio CLI (lms)
 export PATH="$PATH:$HOME/.lmstudio/bin"
 
+# mysql@8.4
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+# podman
+podman completion -f "${fpath[1]}/_podman" zsh
+# export DOCKER_HOST=unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')
 
 # terraform
 autoload -U +X bashcompinit && bashcompinit
@@ -234,3 +247,7 @@ complete -o nospace -C terraform terraform
 #     "$TMUX_TOGGLE_LOGGING_SCRIPT"
 #   fi
 # fi
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/oh/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

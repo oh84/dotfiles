@@ -1,12 +1,15 @@
 [tools]
-aws-cli = "latest"
+ansible-core = "latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
 bun = "latest"
 deno = "latest"
-"github:secretlint/secretlint" = "latest"
 go = "latest"
+herdr = "latest"
 java = "lts"
 node = "lts"
 python = "3.13"
 ruby = "3.3"
 rust = "latest"
+terraform = "latest"
 uv = "latest"
+"github:secretlint/secretlint" = "latest"

@@ -1,0 +1,24 @@
+{
+  "alwaysThinkingEnabled": false,
+  "language": "Japanese",
+  "model": "claude-fable-5[1m]",
+  "permissions": {
+    "allow": [
+      "Read(**/.env*.example)",
+      "Read(**/.env*.sample)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Read(**/.env*)",
+      "Read(**/secrets/**)",
+      "WebFetch"
+    ]
+  },
+  "statusLine": {
+    "command": "~/.claude/statusline.sh",
+    "type": "command"
+  },
+  "tui": "fullscreen"
+}
