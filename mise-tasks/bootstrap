@@ -20,6 +20,9 @@ if ! command -v brew &>/dev/null; then
 	fi
 fi
 
+# Homebrew 6以降、サードパーティtapのcaskはtrustしないとbrew bundleが失敗する
+brew trust manaflow-ai/cmux
+
 brew bundle --global # from $HOME/.Brewfile
 
 # ==============================================================================
@@ -31,8 +34,12 @@ brew bundle --global # from $HOME/.Brewfile
 # brewのformulaは更新が遅れることがあるため使わない
 # 更新はmise self-updateで行う
 if [[ ! -x "$HOME/.local/bin/mise" ]]; then
-	curl -fsSL https://mise.run | sh
+	# bin/mise経由の実行ではMISE_INSTALL_PATHがキャッシュパスを指した状態で継承されるため、明示的に上書きする
+	curl -fsSL https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh
 fi
+
+# PATHにmiseがいない環境（bin/miseから実行するCIや新しいマシン）でも以降のmise呼び出しが動くようにする
+export PATH="$HOME/.local/bin:$PATH"
 
 # standalone版はbrew formulaと違い補完関数がsite-functionsへ入らないため、ここで生成する
 # 補完候補は実行時にusage CLI（miseの[tools]で管理）が生成するので、このラッパーは再生成不要

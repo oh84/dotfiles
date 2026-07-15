@@ -77,6 +77,9 @@ return unless OS.mac? && !ENV['CI']
 # cask
 # ==============================================================================
 
+# 手動インストール済みのアプリがあっても失敗せず、brew管理へ取り込む
+cask_args adopt: true
+
 cask '1password'
 cask '1password-cli'
 cask 'alt-tab'
@@ -138,7 +141,7 @@ cask 'qlmarkdown'
 cask 'qlstephen'
 cask 'quicklook-video' # 旧qlvideo
 cask 'quicklook-csv'
-cask 'quicklook-json'
+# cask 'quicklook-json' # 2025-12-23にHomebrew側で無効化された
 cask 'suspicious-package'
 cask 'syntax-highlight'
 cask 'webpquicklook'
