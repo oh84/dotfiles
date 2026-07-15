@@ -20,7 +20,7 @@ fi
 echo "$files" | xargs secretlint --secretlintrc "$secretlintrc"
 ret=$?
 
-if [ $ret -ne 0 ] ;then
+if [ $ret -ne 0 ]; then
 	exit $ret
 fi
 
@@ -34,3 +34,10 @@ for file in $files; do
 	echo " $file"
 done
 echo ""
+
+# core.hooksPathでこのフックが優先されるため、
+# リポジトリローカルのフック（mise generate git-pre-commitで生成など）があれば連鎖実行する
+repo_hook="$(git rev-parse --git-dir)/hooks/pre-commit"
+if [ -x "$repo_hook" ]; then
+	"$repo_hook" "$@"
+fi

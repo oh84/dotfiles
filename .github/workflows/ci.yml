@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["**"]
+
+permissions: {}
+
+jobs:
+  lint:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      # pre-commitフックと同じlintタスクを実行する
+      - run: |
+          ./bin/mise trust
+          ./bin/mise install
+          ./bin/mise run lint
+
+  bootstrap:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      # dotfiles.root が ~/ghq/github.com/oh84/dotfiles 固定のため、実際の配置を再現する
+      - name: Link workspace to ghq path
+        run: |
+          mkdir -p "$HOME/ghq/github.com/oh84"
+          ln -s "$GITHUB_WORKSPACE" "$HOME/ghq/github.com/oh84/dotfiles"
+
+      # tools（言語ランタイム一式）はCIには重すぎるのでスキップ
+      # ランナーに元からある ~/.zshrc 等と衝突するので --force-dotfiles で上書き
+      - name: Run mise bootstrap
+        run: |
+          cd "$HOME/ghq/github.com/oh84/dotfiles"
+          ./bin/mise trust
+          ./bin/mise bootstrap --yes --force-dotfiles --skip tools
+
+      # 再実行が安全（収束済みの項目はスキップされる）ことの確認
+      - name: Run mise bootstrap again (idempotency)
+        run: |
+          cd "$HOME/ghq/github.com/oh84/dotfiles"
+          ./bin/mise bootstrap --yes --skip tools
+
+      - name: Verify
+        run: |
+          cd "$HOME/ghq/github.com/oh84/dotfiles"
+          ./bin/mise dotfiles status
+          test "$(readlink "$HOME/.zshrc")" = "$HOME/ghq/github.com/oh84/dotfiles/configs/.zshrc"
+          test -e "$HOME/.zshrc" # リンク切れでないこと
+          test -d "$HOME/.tmux/plugins/tpm"
+          brew bundle check --global

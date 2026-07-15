@@ -23,6 +23,6 @@ disabled = false
 [custom.gh_user]
 command = "yq '.\"github.com\".user' ~/.config/gh/hosts.yml"
 when = "yq '.\"github.com\".user' ~/.config/gh/hosts.yml | grep -qv '^null$' || exit 1"
-symbol  = " "
-style   = "bold blue"
-format  = "[$symbol $output]($style) "
+symbol = " "
+style = "bold blue"
+format = "[$symbol $output]($style) "
