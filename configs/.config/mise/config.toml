@@ -1,15 +1,28 @@
 [tools]
-ansible-core = "latest"
-aws-cli = { version = "latest", symlink_bins = "true" }
+
+# miseの補完関数（bootstrapタスクで生成）が実行時に呼ぶ
+usage = "latest"
+
+# 言語ランタイム
 bun = "latest"
 deno = "latest"
 go = "latest"
-herdr = "latest"
 java = "lts"
 node = "lts"
 python = "3.13"
 ruby = "3.3"
 rust = "latest"
-terraform = "latest"
 uv = "latest"
+
+# GitHub Actions
+actionlint = "latest"
+ghalint = "latest"
+pinact = "latest"
+zizmor = "latest"
+
+# その他
+ansible-core = "latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
+herdr = "latest"
+terraform = "latest"
 "github:secretlint/secretlint" = "latest"

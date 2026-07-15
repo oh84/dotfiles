@@ -212,9 +212,6 @@ compinit
 # gibo
 command -v gibo &>/dev/null && source <(gibo completion zsh)
 
-# gh copilot (Set alias `ghce` and `ghcs`)
-[[ -d "$HOME/.config/gh-copilot" ]] && eval "$(gh copilot alias -- zsh)"
-
 # Kiro
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 

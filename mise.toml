@@ -1,62 +1,31 @@
 # https://mise.jdx.dev/bootstrap.html
 # 新しいマシンでは ./bin/mise bootstrap --yes で一括セットアップする
+# セクションはmise bootstrapの実行順（repos → dotfiles → tools → bootstrapタスク）に並べている
 min_version = "2026.7.5"
-
-# このリポジトリの開発用ツール（lint用）
-[tools]
-actionlint = "latest"
-ghalint = "latest"
-pinact = "latest"
-shellcheck = "latest"
-shfmt = "latest"
-taplo = "latest"
-zizmor = "latest"
-
-[tasks.lint]
-description = "全リンターを実行"
-depends = ["lint:*"]
-
-[tasks."lint:shell"]
-description = "シェルスクリプトのlintとフォーマットチェック"
-run = [
-  "git grep -l '^#!.*bash' -- ':!bin' | xargs -r shellcheck",
-  "git grep -l '^#!.*bash' -- ':!bin' | xargs -r shfmt --diff",
-]
-
-[tasks."lint:actions"]
-description = "GitHub Actionsワークフローのチェック"
-run = [
-  "actionlint",
-  "zizmor .github/workflows/",
-  "ghalint run",
-  "pinact run --check",
-]
-
-[tasks."lint:toml"]
-description = "TOMLファイルのチェック"
-run = ["git ls-files '*.toml' | xargs -r taplo fmt --check --diff"]
-
-[tasks."lint:json"]
-description = "JSONファイルの構文チェック（コメント付きJSONを許容するkarabinerは除外）"
-run = [
-  "git ls-files '*.json' ':!configs/.config/karabiner' | xargs -rI{} jq empty {}",
-]
-
-[tasks.pre-commit]
-description = "pre-commitフックから実行される（mise generate git-pre-commitで接続）"
-depends = ["lint"]
 
 [settings]
 experimental = true
 # ソースは configs/ 以下にホームディレクトリと同じ構造でミラーする
 dotfiles.root = "~/ghq/github.com/oh84/dotfiles/configs"
 
+# ==============================================================================
+# 1. リポジトリのクローン
+# ==============================================================================
+
+[bootstrap.repos]
+"~/.tmux/plugins/tpm" = { url = "https://github.com/tmux-plugins/tpm" }
+
+# ==============================================================================
+# 2. dotfilesのシンボリックリンク
+# ==============================================================================
+
+[bootstrap.hooks.pre-dotfiles]
+run = "mkdir -p ~/ghq/github.com/oh84/dotfiles/configs/.config/git/private"
+
 [dotfiles]
 
 # brew
 "~/.Brewfile" = { mode = "symlink" }
-"~/.Brewfile.cask" = { mode = "symlink" }
-"~/.Brewfile.mas" = { mode = "symlink" }
 
 # git
 "~/.config/git/config" = { mode = "symlink" }
@@ -106,8 +75,55 @@ dotfiles.root = "~/ghq/github.com/oh84/dotfiles/configs"
 "~/.config/karabiner/" = { mode = "symlink" }
 "~/.hammerspoon/init.lua" = { mode = "symlink" }
 
-[bootstrap.repos]
-"~/.tmux/plugins/tpm" = { url = "https://github.com/tmux-plugins/tpm" }
+# ==============================================================================
+# 3. ツールのインストール（グローバルツールは configs/.config/mise/config.toml 側）
+# ==============================================================================
 
-[bootstrap.hooks.pre-dotfiles]
-run = "mkdir -p ~/ghq/github.com/oh84/dotfiles/configs/.config/git/private"
+# このリポジトリの開発用ツール（lint用）
+[tools]
+actionlint = "latest"
+ghalint = "latest"
+jq = "latest"
+pinact = "latest"
+shellcheck = "latest"
+shfmt = "latest"
+taplo = "latest"
+zizmor = "latest"
+
+# ==============================================================================
+# 4. タスク（bootstrapタスク本体は mise-tasks/bootstrap。以下は開発用）
+# ==============================================================================
+
+[tasks.lint]
+description = "全リンターを実行"
+depends = ["lint:*"]
+
+[tasks."lint:shell"]
+description = "シェルスクリプトのlintとフォーマットチェック"
+run = [
+  "git grep -l '^#!.*bash' -- ':!bin' | xargs -r shellcheck",
+  "git grep -l '^#!.*bash' -- ':!bin' | xargs -r shfmt --diff",
+]
+
+[tasks."lint:actions"]
+description = "GitHub Actionsワークフローのチェック"
+run = [
+  "actionlint",
+  "zizmor .github/workflows/",
+  "ghalint run",
+  "pinact run --check",
+]
+
+[tasks."lint:toml"]
+description = "TOMLファイルのチェック"
+run = ["git ls-files '*.toml' | xargs -r taplo fmt --check --diff"]
+
+[tasks."lint:json"]
+description = "JSONファイルの構文チェック（コメント付きJSONを許容するkarabinerは除外）"
+run = [
+  "git ls-files '*.json' ':!configs/.config/karabiner' | xargs -rI{} jq empty {}",
+]
+
+[tasks.pre-commit]
+description = "pre-commitフックから実行される（mise generate git-pre-commitで接続）"
+depends = ["lint"]

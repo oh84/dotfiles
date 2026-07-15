@@ -21,8 +21,22 @@ if ! command -v brew &>/dev/null; then
 fi
 
 brew bundle --global # from $HOME/.Brewfile
-# brew bundle --file "$HOME/.Brewfile.cask"
-# brew bundle --file "$HOME/.Brewfile.mas"
+
+# ==============================================================================
+# mise
+# ==============================================================================
+
+# bin/miseが入れるのはキャッシュ内のバージョン固定バイナリなので、
+# 日常のシェル用にstandalone版を~/.local/bin/miseへ入れる
+# brewのformulaは更新が遅れることがあるため使わない
+# 更新はmise self-updateで行う
+if [[ ! -x "$HOME/.local/bin/mise" ]]; then
+	curl -fsSL https://mise.run | sh
+fi
+
+# standalone版はbrew formulaと違い補完関数がsite-functionsへ入らないため、ここで生成する
+# 補完候補は実行時にusage CLI（miseの[tools]で管理）が生成するので、このラッパーは再生成不要
+mise completion zsh >"$(brew --prefix)/share/zsh/site-functions/_mise"
 
 # ==============================================================================
 # vim-plug

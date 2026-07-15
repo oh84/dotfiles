@@ -1,8 +1,0 @@
-brew 'mas'
-
-mas 'Bitwarden', id: 1352778147
-mas 'CotEditor', id: 1024640650
-mas 'Kindle', id: 302584613
-mas 'Monosnap', id: 540348655
-mas 'Toggl Track: Hours & Time Log', id: 1291898086
-mas 'Xcode', id: 497799835
